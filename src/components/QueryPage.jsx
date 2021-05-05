@@ -1,15 +1,38 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import React, { useState, useEffect } from 'react';
-
-import { Layout, Menu, Breadcrumb, Button, Typography, Space,Table, Tag } from 'antd';
+import { 
+  Layout, 
+  Menu, 
+  Breadcrumb, 
+  Button, 
+  Typography, 
+  Space, 
+  Table, 
+  Tag, 
+  Input, 
+  Form, 
+  Select, 
+  message, 
+} from 'antd';
 import { uniFetch } from '../utils/apiUtil';
+import { AudioOutlined } from '@ant-design/icons';
 
 import './QueryPage.css';
 import axios from 'axios';
 
+const { Option } = Select;
 const { Text, Link } = Typography;
 const { Header, Content, Footer } = Layout;
+const { Search } = Input;
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
+
 // 书号, 类别, 书名, 出版社, 年份, 作者, 价格, 数量
 const columns = [
   {
@@ -17,6 +40,7 @@ const columns = [
     dataIndex: 'bno',
     // key: 'name',
     render: text => <a>{text}</a>,
+    sorter: (a, b) => a.bno - b.bno,
   },
   {
     title: '类别',
@@ -30,7 +54,7 @@ const columns = [
   },
   {
     title: '出版社',
-    dataIndex: 'bname',
+    dataIndex: 'press',
     // key: 'address',
   },
   {
@@ -167,28 +191,58 @@ const QueryPage = () => {
   useEffect(() => {
     (async () => {
 
-      axios.get('/api/book/findAll')
-        .then(response => {
-          console.log("response:", response);
-          setBookData(response.data);
-          console.log("bookData:", response.data);
-        });
+
 
     })();
   }, []);
 
-  
+  const onReset = () => {
+    form.resetFields();
+  };
 
+  const [form] = Form.useForm();
+  const onSubmit = (values) => {
 
+    console.log('values: ', values, typeof(values));
+    let findParas = "";
+    for (let prop in values) {
+      if(typeof(values[prop]) !== "undefined"){
+        findParas += (prop + "=" + values[prop] + "&&");
+      }
+    }
+    axios.get('/api/book/findBy' + "?" + findParas.substring(0, findParas.length - 2)) // Cut the "&&" in the tail
+    .then(response => {
+      // console.log("response:", response);
+      setBookData(response.data);
+      // console.log("bookData:", response.data);
+      message.success('查询成功！');
+      
+    }).catch( (error) => {
+      message.error('查询失败');
+      console.log(error);
+    });;
+
+    // console.log(findParas.substring(0, findParas.length - 2)); 
+  };
 
   return (
     <>
     <Layout className="layout">
     <Header>
       <div className="logo" />
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
+      <Menu theme="dark" 
+      mode="horizontal" 
+      defaultSelectedKeys={['1']}
+      onClick={({ item, key, keyPath, domEvent }) => {
+        console.log(key);
+        if(key == '2'){
+          window.open(`/`,'_self');
+        };
+      }}
+      >
         <Menu.Item key="1">免登录查询</Menu.Item>
-        <Menu.Item key="2">敬请期待...</Menu.Item>
+        <Menu.Item key="2">返回首页</Menu.Item>
+        <Menu.Item key="3">敬请期待...</Menu.Item>
       </Menu>
     </Header>
     <Content style={{ padding: '0 50px' }}>
@@ -196,25 +250,82 @@ const QueryPage = () => {
         <Breadcrumb.Item>图书管理系统</Breadcrumb.Item>
         <Breadcrumb.Item>查询藏书</Breadcrumb.Item>
       </Breadcrumb>
-      {/* <div className="site-layout-content">Content
-        <Space direction="vertical">
-          <Text>Ant Design (default)</Text>
-          <Text type="secondary">Ant Design (secondary)</Text>
-          <Text type="success">Ant Design (success)</Text>
-          <Text type="warning">Ant Design (warning)</Text>
-          <Text type="danger">Ant Design (danger)</Text>
-          <Text disabled>Ant Design (disabled)</Text>
-          <Text mark>Ant Design (mark)</Text>
-          <Text code>Ant Design (code)</Text>
-          <Text keyboard>Ant Design (keyboard)</Text>
-          <Text underline>Ant Design (underline)</Text>
-          <Text delete>Ant Design (delete)</Text>
-          <Text strong>Ant Design (strong)</Text>
-          <Link href="https://ant.design" target="_blank">
-          Ant Design (Link)
-          </Link>
-        </Space>
-      </div> */}
+
+
+    <Form {...layout} form={form} name="control-hooks" onFinish={onSubmit}>
+      <Form.Item name="btype" label="类别" rules={[{ required: false }]}>
+        <Input />
+      </Form.Item>
+      <Form.Item name="bname" label="书名" rules={[{ required: false }]}>
+        <Input />
+      </Form.Item>
+      <Form.Item name="press" label="出版社" rules={[{ required: false }]}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item label="年份" rules={[{ required: false }]} >
+        <Form.Item 
+          name="minYear"
+          style={{ display: 'inline-block' }}>
+          <Input style={{ width: 100, textAlign: 'center' }} placeholder="Minimum" />
+        </Form.Item>
+        <Input
+          className="site-input-split"
+          style={{
+            width: 30,
+            borderLeft: 0,
+            borderRight: 0,
+            pointerEvents: 'none',
+          }}
+          placeholder="~"
+          disabled
+        />
+        <Form.Item 
+          name="maxYear" 
+          style={{ display: 'inline-block' }}>
+          <Input style={{ width: 100, textAlign: 'center' }} placeholder="Maximum" />
+        </Form.Item>
+      </Form.Item>
+
+      <Form.Item name="author" label="作者" rules={[{ required: false }]}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item label="价格" rules={[{ required: false }]} >
+        <Form.Item 
+          name="minPrice"
+          style={{ display: 'inline-block' }}>
+          <Input style={{ width: 100, textAlign: 'center' }} placeholder="Minimum" />
+        </Form.Item>
+        <Input
+          className="site-input-split"
+          style={{
+            width: 30,
+            borderLeft: 0,
+            borderRight: 0,
+            pointerEvents: 'none',
+          }}
+          placeholder="~"
+          disabled
+        />
+        <Form.Item 
+          name="maxPrice" 
+          style={{ display: 'inline-block' }}>
+          <Input style={{ width: 100, textAlign: 'center' }} placeholder="Maximum" />
+        </Form.Item>
+      </Form.Item>
+
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit" >
+          Submit
+        </Button>
+        <Button htmlType="button" onClick={onReset}>
+          Reset
+        </Button>
+
+      </Form.Item>
+    </Form>
+
       <Table columns={columns} dataSource={bookData} />
     </Content>
     <Footer style={{ textAlign: 'center' }}>FanBB © 2021</Footer>

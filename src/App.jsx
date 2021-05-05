@@ -6,10 +6,10 @@ import React from 'react';
 import { Button } from 'antd';
 
 import MainPage from './components/MainPage';
-import LoginPage from './components/LoginPage';
+import ManagePage from './components/ManagePage';
 import QueryPage from './components/QueryPage';
 
-function App() {
+const App = () => {
   return (
     <>
     <Router>
@@ -22,9 +22,9 @@ function App() {
           {/* <div>query</div> */}
           <QueryPage></QueryPage>
         </Route>
-        <Route path='/login'>
+        <Route path='/manager'>
           {/* <div>login</div> */}
-          <LoginPage></LoginPage>
+          <ManagePage></ManagePage>
         </Route>
       </Switch>
     </Router>

@@ -6,7 +6,7 @@ import React from 'react';
 import { Button, Layout, Menu} from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 
-function MainPage() {
+const MainPage = () => {
   return (
     <>
     <Layout>
@@ -16,7 +16,7 @@ function MainPage() {
           {/* <Title /> */}
           <p id='Text'>Library Management</p>
         </div>
-        <Button type="primary"><Link to="/login">管理员登录</Link></Button>
+        <Button type="primary"><Link to="/manager">管理员登录</Link></Button>
         <Button type="primary"><Link to="/query">查询</Link></Button>
 
         
