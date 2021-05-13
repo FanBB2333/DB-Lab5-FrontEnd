@@ -23,10 +23,17 @@ import {
   UploadOutlined,
 } from '@ant-design/icons';
 
+
+import LoginPage from './LoginPage';
+import AddOne from './AddOne';
+import AddMany from './AddMany';
+import BorrowPage from './BorrowPage';
+import ReturnPage from './ReturnPage';
+
 const { Text, Ty_link } = Typography;
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
-const LoginPage = () => {
+const ManagePage = () => {
   let match = useRouteMatch();
   const layout = {
     labelCol: { span: 8, width : '80px' },
@@ -129,52 +136,28 @@ const LoginPage = () => {
         >
           <Switch>
           <Route path={`${match.path}/login`}>
-            <Text>欢迎来到登录界面</Text>
-            <Form
-              {...layout}
-              name="basic"
-              initialValues={{ remember: true }}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-            >
-              <Form.Item
-                style = {{width : '80%'}}
-                label="Username"
-                name="username"
-                rules={[{ required: true, message: 'Please input your username!' }]}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item
-                style = {{width : '80%'}}
-                label="Password"
-                name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
-              >
-                <Input.Password />
-              </Form.Item>
-
-              <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                <Checkbox>Remember me</Checkbox>
-              </Form.Item>
-
-              <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit">
-                  Submit
-                </Button>
-              </Form.Item>
-            </Form>
+            <LoginPage></LoginPage>
           </Route>
 
           <Route path={`${match.path}/addbook/one`}>
+            <AddOne></AddOne>
           </Route>
 
           <Route path={`${match.path}/addbook/many`}>
+            <AddMany></AddMany>
           </Route>
 
-          <Route path={`${match.path}/dept/:did`}>
+          <Route path={`${match.path}/book/borrow`}>
+            <BorrowPage></BorrowPage>
           </Route>
+          <Route path={`${match.path}/book/return`}>
+            <ReturnPage></ReturnPage>
+          </Route>
+          <Route path={`${match.path}/card/add`}>
+          </Route>
+          <Route path={`${match.path}/card/del`}>
+          </Route>
+
         </Switch>
 
         </Content>
@@ -186,4 +169,4 @@ const LoginPage = () => {
   );
 }
 
-export default LoginPage;
+export default ManagePage;

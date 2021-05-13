@@ -192,7 +192,6 @@ const QueryPage = () => {
     (async () => {
 
 
-
     })();
   }, []);
 
@@ -220,7 +219,7 @@ const QueryPage = () => {
     }).catch( (error) => {
       message.error('查询失败');
       console.log(error);
-    });;
+    });
 
     // console.log(findParas.substring(0, findParas.length - 2)); 
   };
