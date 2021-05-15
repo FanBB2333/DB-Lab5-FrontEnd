@@ -13,6 +13,7 @@ import {
   Table,
   message, 
   Steps,
+  Space,
 } from 'antd';
 
 import {
@@ -91,18 +92,35 @@ const BorrowPage = () => {
 
 
   const onSearchCno = (value)=>{
-    axios.get('/api/book/findByCno' + "?cno=" + value)
+
+    axios.get('/api/card/findByCno' + "?cno=" + value) 
     .then(response => {
-      // console.log("response:", response);
-      setBookData(response.data);
-      // console.log("bookData:", response.data);
-      message.success('查询成功！');
-      setStepState(1);
+      // console.log(response.data);
+      if(response.data.length != 1) {
+        message.error("借阅证不存在!");
+      }
+      else{
+        axios.get('/api/book/findByCno' + "?cno=" + value)
+        .then(response => {
+          // console.log("response:", response);
+          setBookData(response.data);
+          // console.log("bookData:", response.data);
+          message.success('查询成功！');
+          setStepState(1);
+          
+        }).catch( (error) => {
+          message.error('查询失败');
+          console.log(error);
+        });
+      }
       
     }).catch( (error) => {
       message.error('查询失败');
       console.log(error);
     });
+
+
+
 
     console.log(value);
   }
@@ -114,23 +132,25 @@ const BorrowPage = () => {
       <Step title="输入想要借的书号" description="点击查看是否可供借阅" />
     </Steps>
     <br></br>
-    <Search
-      style={{width: '40%'}}
-      placeholder="在这里键入借书证号"
-      allowClear
-      enterButton="查询"
-      size="large"
-      onSearch={onSearchCno}
-    />
+    <Space size={600}>
+      <Search
+        // style={{width: '40%'}}
+        placeholder="在这里键入借书证号"
+        allowClear
+        enterButton="查询"
+        size="large"
+        onSearch={onSearchCno}
+      />
 
-    <Search
-      style={{width: '40%', borderRight: '0px'}}
-      placeholder="在这里键入想要借的书号"
-      allowClear
-      enterButton="尝试借阅"
-      size="large"
-      onSearch={(value)=>{console.log(value)}}
-    />
+      <Search
+        // style={{width: '40%', borderRight: '0px'}}
+        placeholder="在这里键入想要借的书号"
+        allowClear
+        enterButton="尝试借阅"
+        size="large"
+        onSearch={(value)=>{console.log(value)}}
+      />
+    </Space>
     <br /> <br /> 
     <Text>该用户已借阅的书目</Text>
 

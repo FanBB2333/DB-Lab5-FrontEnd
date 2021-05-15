@@ -29,6 +29,8 @@ import AddOne from './AddOne';
 import AddMany from './AddMany';
 import BorrowPage from './BorrowPage';
 import ReturnPage from './ReturnPage';
+import AddCard from './AddCard';
+import RemoveCard from './RemoveCard';
 
 const { Text, Ty_link } = Typography;
 const { Header, Sider, Content } = Layout;
@@ -154,8 +156,10 @@ const ManagePage = () => {
             <ReturnPage></ReturnPage>
           </Route>
           <Route path={`${match.path}/card/add`}>
+            <AddCard></AddCard>
           </Route>
           <Route path={`${match.path}/card/del`}>
+            <RemoveCard></RemoveCard>
           </Route>
 
         </Switch>

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Switch, useRouteMatch, Link } from 'react-router-dom';
 
 import React from 'react';
+import axios from 'axios';
 import { 
   Form, 
   Input, 
@@ -9,6 +10,10 @@ import {
   Typography,
   Layout,
   Menu,
+  Space,
+  Divider,
+  Upload,
+  message,
   Breadcrumb,
 } from 'antd';
 
@@ -19,6 +24,7 @@ import {
   VideoCameraOutlined,
   LaptopOutlined, 
   NotificationOutlined,
+  InboxOutlined,
   TabletOutlined, 
   UploadOutlined,
 } from '@ant-design/icons';
@@ -26,6 +32,7 @@ import {
 const { Text, Ty_link } = Typography;
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
+const { Dragger } = Upload;
 const AddMany = () => {
   let match = useRouteMatch();
   const layout = {
@@ -43,45 +50,51 @@ const AddMany = () => {
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
+
+  const props = {
+    action: 'http://localhost:8080/api/book/upload',
+    multiple: true,
+    onChange({ file, fileList }) {
+      if (file.status !== 'uploading') {
+        console.log(file, fileList);
+        let formData = new FormData();
+
+        formData.append('file',file.originFileObj);
+        console.log('formData', formData);
+        console.log("originFileObj:",file.originFileObj);
+
+        // axios({
+        //     url:'http://localhost:8080/api/book/upload',
+        //     method: 'post',
+        //     data: formData,
+        //     processData: false,// 告诉axios不要去处理发送的数据(重要参数)
+        //     contentType: false,   // 告诉axios不要去设置Content-Type请求头
+        // }).then((res)=>{
+        //     console.log(res)
+        // });
+
+      }
+    },
+    defaultFileList: [],
+  };
+
   return (
     <>
-    <Text>欢迎来到登录界面</Text>
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Form.Item
-        style = {{width : '80%'}}
-        label="Username"
-        name="username"
-        rules={[{ required: true, message: 'Please input your username!' }]}
-        >
-        <Input />
-        </Form.Item>
+    <Space split={<Divider type="vertical" />}>
 
-        <Form.Item
-        style = {{width : '80%'}}
-        label="Password"
-        name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
-        >
-        <Input.Password />
-        </Form.Item>
-
-        <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-        <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
-        <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-            Submit
-        </Button>
-        </Form.Item>
-      </Form>
-    
+    <Text>欢迎使用批量入库功能</Text>
+    <Dragger {...props}>
+      <p className="ant-upload-drag-icon">
+        <InboxOutlined />
+      </p>
+      <p className="ant-upload-text">点击或拖拽文件至此以入库</p>
+      <p className="ant-upload-hint">
+        Support for a single or bulk upload. Strictly prohibit from uploading company data or other
+        band files
+      </p>
+    </Dragger>
+    </Space>
+      
     </>
   );
 }

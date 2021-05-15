@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 
 import React, { useState, useEffect } from 'react';
 import { 
@@ -18,19 +18,20 @@ import {
 import { uniFetch } from '../utils/apiUtil';
 import { AudioOutlined } from '@ant-design/icons';
 
-import './QueryPage.css';
+// import './QueryPage.css';
 import axios from 'axios';
 
 const { Option } = Select;
-const { Text, Link } = Typography;
+const { Text, Ty_link } = Typography;
 const { Header, Content, Footer } = Layout;
 const { Search } = Input;
 const layout = {
-  labelCol: { span: 8 },
+  labelCol: { span: 9 },
   wrapperCol: { span: 16 },
+  style: {width: '80%'}
 };
 const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
+  wrapperCol: { offset: 9, span: 20 },
 };
 
 // 书号, 类别, 书名, 出版社, 年份, 作者, 价格, 数量
@@ -233,14 +234,14 @@ const QueryPage = () => {
       mode="horizontal" 
       defaultSelectedKeys={['1']}
       onClick={({ item, key, keyPath, domEvent }) => {
-        console.log(key);
-        if(key == '2'){
-          window.open(`/`,'_self');
-        };
+        // console.log(key);
+        // if(key == '2'){
+        //   window.open(`/`,'_self');
+        // };
       }}
       >
         <Menu.Item key="1">免登录查询</Menu.Item>
-        <Menu.Item key="2">返回首页</Menu.Item>
+        <Menu.Item key="2"><Link to={`/`}>返回首页</Link></Menu.Item>
         <Menu.Item key="3">敬请期待...</Menu.Item>
       </Menu>
     </Header>
@@ -315,13 +316,15 @@ const QueryPage = () => {
       </Form.Item>
 
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit" >
-          Submit
-        </Button>
-        <Button htmlType="button" onClick={onReset}>
-          Reset
-        </Button>
+        <Space size={100}>
+          <Button type="primary" htmlType="submit" >
+            Submit
+          </Button>
 
+          <Button htmlType="button" onClick={onReset}>
+            Reset
+          </Button>
+        </Space>
       </Form.Item>
     </Form>
 
