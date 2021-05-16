@@ -87,11 +87,13 @@ const columns = [
 
 const BorrowPage = () => {
   let match = useRouteMatch();
+  const [currentCno, setCurrentCno] = useState();
   const [stepState, setStepState] = useState(0);
   const [bookData, setBookData] = useState([]);
 
 
   const onSearchCno = (value)=>{
+    setCurrentCno(value);
 
     axios.get('/api/card/findByCno' + "?cno=" + value) 
     .then(response => {
@@ -124,6 +126,29 @@ const BorrowPage = () => {
 
     console.log(value);
   }
+
+  const onBorrow = (value) => {
+    axios.get('/api/book/borrow' + "?borrowbno=" + value + "&cno=" + currentCno + "&id=" + "666")
+    .then(response => {
+      console.log("borrowdata:", response.data);
+      if(response.data == "No Stock!"){
+        message.error("没有库存啦!");
+      }
+      else{
+        if(response.data == "Can't find the specific book!"){
+          message.error("书号不存在！");
+        }
+        else if (response.data == "Successfully added borrow record!"){
+          setStepState(2);
+          message.success('借阅成功！');
+        }
+      }
+      
+    }).catch( (error) => {
+      message.error('查询失败');
+      console.log(error);
+    });
+  }
   return (
     <>
     <Text>欢迎来到借书界面</Text>
@@ -148,7 +173,7 @@ const BorrowPage = () => {
         allowClear
         enterButton="尝试借阅"
         size="large"
-        onSearch={(value)=>{console.log(value)}}
+        onSearch={onBorrow}
       />
     </Space>
     <br /> <br /> 
