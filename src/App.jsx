@@ -8,6 +8,7 @@ import { Button } from 'antd';
 import MainPage from './components/MainPage';
 import ManagePage from './components/ManagePage';
 import QueryPage from './components/QueryPage';
+import LoginPage from './components/LoginPage';
 
 const App = () => {
   return (
@@ -18,6 +19,9 @@ const App = () => {
           <MainPage></MainPage>
         </Route>
 
+        <Route path={`/login`}>
+            <LoginPage></LoginPage>
+          </Route>
         <Route path='/query'>
           {/* <div>query</div> */}
           <QueryPage></QueryPage>

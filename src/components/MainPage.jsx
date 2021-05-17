@@ -27,7 +27,7 @@ const MainPage = () => {
           <p id='Text'>Library Management</p>
         </div>
         <Space style={{height: '450px'}}>
-          <Button type="primary"><Link to="/manager">管理员登录</Link></Button>
+          <Button type="primary"><Link to="/login">管理员登录</Link></Button>
           <Button type="primary"><Link to="/query">查询</Link></Button>
         </Space>
         

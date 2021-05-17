@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch, useRouteMatch, Link } from 'react-router-dom';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Form, 
   Input, 
@@ -37,6 +37,11 @@ const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 const ManagePage = () => {
   let match = useRouteMatch();
+  useEffect(() => {
+    (async () => {
+
+    })();
+  }, []);
   const layout = {
     labelCol: { span: 8, width : '80px' },
     wrapperCol: { span: 16 , width : '80px'},
@@ -73,12 +78,13 @@ const ManagePage = () => {
       </Menu>
     </Header>
     <Layout>
-      <Sider width={200} className="site-layout-background">
+      <Sider width={200} className="site-layout-background" >
         <Menu
           mode="inline"
           // defaultSelectedKeys={['1']}
           // defaultOpenKeys={['sub1']}
           style={{ height: '100%', borderRight: 0 }}
+          
         >
           <SubMenu key="sub1" icon={<UserOutlined />} title="图书入库">
             <Menu.Item key="1">
@@ -137,9 +143,9 @@ const ManagePage = () => {
           }}
         >
           <Switch>
-          <Route path={`${match.path}/login`}>
+          {/* <Route path={`${match.path}/login`}>
             <LoginPage></LoginPage>
-          </Route>
+          </Route> */}
 
           <Route path={`${match.path}/addbook/one`}>
             <AddOne></AddOne>
