@@ -10,6 +10,7 @@ import {
   Layout,
   Menu,
   Breadcrumb,
+  Space,
   message,
 } from 'antd';
 
@@ -79,13 +80,14 @@ const AddCard = () => {
       
 
       <Form.Item {...tailLayout}>
+        <Space>
         <Button type="primary" htmlType="submit" >
           添加
         </Button>
         <Button htmlType="button" onClick={onReset}>
           Reset
         </Button>
-
+        </Space>
       </Form.Item>
     </Form>
 

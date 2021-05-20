@@ -144,6 +144,8 @@ const RemoveCard = () => {
       if(len == -1){
         return(
           <>
+          <br />
+          <br />
             <Text mark>此借书证号不存在！</Text>
           </>
         )
@@ -151,12 +153,16 @@ const RemoveCard = () => {
       if(len == -2){
         return(
           <>
+          <br />
+          <br />
             <Text mark>请键入需要注销的借书证号！</Text>
           </>
         )
       }
       return(
         <>
+          <br />
+          <br />
           <Text type="warning">此借书证不可被注销！仍有<Text keyboard>{len}</Text>本图书未归还</Text>
           <Table columns={columns} dataSource={unreturnedBook} />
 
