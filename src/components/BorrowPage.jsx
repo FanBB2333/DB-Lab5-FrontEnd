@@ -122,8 +122,6 @@ const BorrowPage = () => {
     });
 
 
-
-
     console.log(value);
   }
 
@@ -133,6 +131,22 @@ const BorrowPage = () => {
       console.log("borrowdata:", response.data);
       if(response.data == "No Stock!"){
         message.error("没有库存啦!");
+
+        axios.get('/api/record/findLatest' + "?bno=" + value) 
+        .then(response => {
+          message.warning(`最近的归还时间:${response.data}`);
+
+          
+        }).catch( (error) => {
+          console.log(error);
+        });
+
+
+
+
+
+
+
       }
       else{
         if(response.data == "Can't find the specific book!"){

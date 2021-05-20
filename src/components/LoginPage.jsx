@@ -40,11 +40,11 @@ const LoginPage = () => {
   // }, []);
   const history = useHistory();
   const layout = {
-    labelCol: { span: 8, width : '80px' },
-    wrapperCol: { span: 16 , width : '80px'},
+    labelCol: { span: 11, width : '80px' },
+    wrapperCol: { span: 8 , width : '8px'},
   };
   const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
+    wrapperCol: { offset: 11, span: 16 },
   };
   
   const onFinish = (values) => {
@@ -76,27 +76,25 @@ const LoginPage = () => {
     <Layout className="layout">
     <Header>
       <div className="logo" />
+      
       <Menu theme="dark" 
       mode="horizontal" 
       defaultSelectedKeys={['1']}
       onClick={({ item, key, keyPath, domEvent }) => {
-        // console.log(key);
-        // if(key == '2'){
-        //   window.open(`/`,'_self');
-        // };
       }}
       >
         <Menu.Item key="1">管理员登录</Menu.Item>
         <Menu.Item key="2"><Link to={`/`}>返回首页</Link></Menu.Item>
       </Menu>
     </Header>
-    <Content style={{ padding: '0 50px' }}>
+    <Content style={{ padding: '0 50px', height: '1000px'}}>
       <Breadcrumb style={{ margin: '16px 0' }}>
         <Breadcrumb.Item>图书管理系统</Breadcrumb.Item>
         <Breadcrumb.Item>管理员登录</Breadcrumb.Item>
       </Breadcrumb>
-
-      <Text>欢迎来到登录界面</Text>
+      <br />  <br /> 
+      <Text style={{ padding: '700px', 'font-size': '25px'}} strong >欢迎来到登录界面</Text>
+      <br />  <br /> <br /> <br />
       <Form
         {...layout}
         name="basic"

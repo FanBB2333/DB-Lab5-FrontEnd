@@ -61,6 +61,8 @@ const columns = [
   {
     title: '年份',
     dataIndex: 'year',
+    render: text => <p>{text}</p>,
+    sorter: (a, b) => a.year - b.year,
     // key: 'address',
   },
   {
@@ -71,16 +73,22 @@ const columns = [
   {
     title: '价格',
     dataIndex: 'price',
+    render: text => <div>{text}</div>,
+    sorter: (a, b) => a.price - b.price,
     // key: 'address',
   },
   {
     title: '总藏书量',
     dataIndex: 'total',
+    render: text => <div>{text}</div>,
+    sorter: (a, b) => a.total - b.total,
     // key: 'address',
   },
   {
     title: '库存',
     dataIndex: 'stock',
+    render: text => <div>{text}</div>,
+    sorter: (a, b) => a.stock - b.stock,
     // key: 'address',
   },
   // {
