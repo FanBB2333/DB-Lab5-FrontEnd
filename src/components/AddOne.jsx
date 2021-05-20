@@ -8,6 +8,7 @@ import {
   Checkbox, 
   Typography,
   Layout,
+  message,
   Menu,
   Breadcrumb,
 } from 'antd';
@@ -37,6 +38,12 @@ const AddOne = () => {
   const onSubmit = (values) => {
     axios.post('http://localhost:8080/api/book/save', values).then(response => {
       console.log('response: ',response);
+      if(response.data === "success!"){
+        message.success("success!");
+      }
+      else{
+        message.warning(response.data);
+      }
     }).catch( (error) => {
       console.log(error);
     });
