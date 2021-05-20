@@ -58,11 +58,16 @@ const AddMany = () => {
       if (file.status !== 'uploading') {
         console.log(file, fileList);
         let formData = new FormData();
-
+        if(fileList[fileList.length - 1].response == '上传成功'){
+          message.success("入库成功");
+        }
+        else{
+          message.warning(fileList[fileList.length - 1].response);
+        }
         formData.append('file',file.originFileObj);
         console.log('formData', formData);
         console.log("originFileObj:",file.originFileObj);
-
+        
         // axios({
         //     url:'http://localhost:8080/api/book/upload',
         //     method: 'post',
