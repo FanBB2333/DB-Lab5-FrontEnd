@@ -148,13 +148,13 @@ const ReturnPage = () => {
   }
   return (
     <>
-    <Text>欢迎来到还书界面</Text>
+    <Text style={{ padding: '570px', 'font-size': '25px'}} strong >欢迎使用还书功能</Text>
     <Steps current={stepState} status="process">
       <Step title="输入借书证号" description="点击后查询借书记录" />
       <Step title="输入想要还的书号" description="点击尝试归还" />
     </Steps>
     <br></br>
-    <Space size={600}>
+    <Space size={850}>
       <Search
         // style={{width: '40%'}}
         placeholder="在这里键入借书证号"
@@ -165,7 +165,7 @@ const ReturnPage = () => {
       />
 
       <Search
-        // style={{width: '40%', borderRight: '0px'}}
+        // style={{width: '100%', borderRight: '-50px',right: '0px'}}
         placeholder="在这里键入想要还的书号"
         allowClear
         enterButton="尝试归还"

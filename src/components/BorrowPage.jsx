@@ -143,10 +143,6 @@ const BorrowPage = () => {
 
 
 
-
-
-
-
       }
       else{
         if(response.data == "Can't find the specific book!"){
@@ -165,13 +161,13 @@ const BorrowPage = () => {
   }
   return (
     <>
-    <Text>欢迎来到借书界面</Text>
+    <Text style={{ padding: '570px', 'font-size': '25px'}} strong >欢迎使用借书功能</Text>
     <Steps current={stepState} status="process">
       <Step title="输入借书证号" description="点击后查询借书记录" />
       <Step title="输入想要借的书号" description="点击查看是否可供借阅" />
     </Steps>
     <br></br>
-    <Space size={600}>
+    <Space size={850}>
       <Search
         // style={{width: '40%'}}
         placeholder="在这里键入借书证号"
